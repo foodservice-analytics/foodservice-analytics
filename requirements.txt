@@ -1,0 +1,5 @@
+ytsaurus-client>=0.13
+pandas>=2.0
+matplotlib>=3.7
+pyyaml>=6.0
+python-dotenv>=1.0

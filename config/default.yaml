@@ -1,0 +1,39 @@
+data_source:
+  type: yt
+  yt:
+    proxy: "env:YT_PROXY"
+    proxy_default: "yt-api.xsserver.ru"
+    token_env: "YT_TOKEN"
+
+tables:
+  establishments:
+    path: "//home/spb_food/stg/branches"
+    # Маппинг реальное_имя -> стандартное_имя. Изменять, если схема поменяется.
+    columns:
+      id: id
+      name: name
+      org_id: org_id
+      org_branch_count: org_branch_count
+      rubrics: rubrics
+      district: district
+      city: city
+      lat: lat
+      lon: lon
+      rating: rating
+      review_count: review_count
+      is_deleted: is_deleted
+      deleted_at: deleted_at
+
+analysis:
+  date_to: "2026-10-31"        # снимок «сейчас»
+  chain_min_branches: 2        # org_branch_count >= 2 -> сетевой
+  categories:
+    - "Рестораны"
+    - "Кафе"
+    - "Кофейни"
+    - "Быстрое питание"
+    - "Пекарни"
+  # Динамика с 2018 - этап 2, через wayback_snapshots. Пока не используется.
+
+output:
+  dir: "outputs"
