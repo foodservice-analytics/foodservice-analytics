@@ -35,4 +35,18 @@ class DataSource(ABC):
           deleted_at         — str | None, дата закрытия (если есть)
           org_branch_count   — int, число филиалов организации (для аудита)
         """
+        
+    @abstractmethod
+    def reviews(self) -> pd.DataFrame:
+        """Отзывы о заведениях.
+
+        Колонки:
+          branch_id     — str, ID ветки (= branches.id)
+          review_id     — str, ID отзыва
+          date_created  — str, ISO-дата создания
+          rating        — int, оценка 1..5
+          text          — str | None, текст отзыва
+          provider      — str, '2gis' | 'flamp' | ...
+          is_hidden     — bool, скрыт ли отзыв модерацией
+        """
         ...

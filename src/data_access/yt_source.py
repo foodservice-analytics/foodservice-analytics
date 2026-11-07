@@ -91,3 +91,26 @@ class YTSource(DataSource):
                 df[col] = pd.to_numeric(df[col], errors="coerce")
 
         return df
+
+    def reviews(self) -> pd.DataFrame:
+        spec = self.tables_cfg["reviews"]
+        logger.info("Reading YT table: %s", spec["path"])
+        rows = list(yt.read_table(spec["path"]))
+        if not rows:
+            raise RuntimeError(f"Таблица пустая: {spec['path']}")
+        df = pd.DataFrame(rows)
+        df = df.rename(columns={real: std for real, std in spec["columns"].items()})
+
+        required = {"branch_id", "rating", "text"}
+        missing = required - set(df.columns)
+        if missing:
+            raise RuntimeError(
+                f"В таблице reviews нет колонок: {missing}. Есть: {list(df.columns)}"
+            )
+
+        df["branch_id"] = df["branch_id"].astype(str)
+        df["rating"] = pd.to_numeric(df["rating"], errors="coerce")
+        if "is_hidden" in df.columns:
+            df = df[~df["is_hidden"].fillna(False).astype(bool)]
+            
+        return df
