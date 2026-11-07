@@ -24,6 +24,17 @@ tables:
       is_deleted: is_deleted
       deleted_at: deleted_at
 
+  reviews:
+    path: "//home/spb_food/stg/reviews"
+    columns:
+      branch_id: branch_id
+      review_id: review_id
+      date_created: date_created
+      rating: rating
+      text: text
+      provider: provider
+      is_hidden: is_hidden
+
 analysis:
   date_to: "2026-10-31"        # снимок «сейчас»
   chain_min_branches: 2        # org_branch_count >= 2 -> сетевой
