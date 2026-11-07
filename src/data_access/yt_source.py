@@ -114,3 +114,20 @@ class YTSource(DataSource):
             df = df[~df["is_hidden"].fillna(False).astype(bool)]
             
         return df
+
+    def wayback(self) -> pd.DataFrame:
+        spec = self.tables_cfg["wayback"]
+        logger.info("Reading YT table: %s", spec["path"])
+        rows = list(yt.read_table(spec["path"]))
+        if not rows:
+            raise RuntimeError(f"Таблица пустая: {spec['path']}")
+        df = pd.DataFrame(rows)
+        df = df.rename(columns={real: std for real, std in spec["columns"].items()})
+        
+        df["firm_id"] = df["firm_id"].astype(str)
+        # Убираем пустые id (в wayback они бывают в виде строки "None")
+        df = df[df["firm_id"] != "None"]
+        df = df.dropna(subset=["firm_id"])
+        
+        df["timestamp"] = df["timestamp"].astype(str)
+        return df

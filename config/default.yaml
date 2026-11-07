@@ -35,6 +35,14 @@ tables:
       provider: provider
       is_hidden: is_hidden
 
+  wayback:
+    path: "//home/spb_food/stg/wayback_snapshots"
+    columns:
+      firm_id: firm_id
+      timestamp: timestamp
+      closed_text: closed_text
+      format: format
+
 analysis:
   date_to: "2026-10-31"        # снимок «сейчас»
   chain_min_branches: 2        # org_branch_count >= 2 -> сетевой
