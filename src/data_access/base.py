@@ -49,4 +49,8 @@ class DataSource(ABC):
           provider      — str, '2gis' | 'flamp' | ...
           is_hidden     — bool, скрыт ли отзыв модерацией
         """
+
+    @abstractmethod
+    def wayback(self) -> pd.DataFrame:
+        """Снимки Wayback Machine для 2ГИС."""
         ...
