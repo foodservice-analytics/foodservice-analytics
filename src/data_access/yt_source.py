@@ -83,7 +83,7 @@ class YTSource(DataSource):
         df["is_chain"] = df["org_branch_count"] >= threshold
 
         # is_deleted - bool, None -> False
-        df["is_deleted"] = df["is_deleted"].fillna(False).astype(bool)
+        df["is_deleted"] = df["is_deleted"].astype("boolean").fillna(False).astype(bool)
 
         # Числовые поля
         for col in ("rating", "review_count", "lat", "lon"):
