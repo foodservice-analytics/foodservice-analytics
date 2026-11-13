@@ -83,7 +83,6 @@ python scripts/run_task.py --task 1
 ```
 
 Результаты появятся в `outputs/tables/` (CSV) и `outputs/figures/` (PNG).
-Папка `outputs/` в git не попадает.
 
 ---
 
@@ -106,11 +105,14 @@ foodservice-analytics/
 │   └── tasks/
 │       ├── __init__.py         # реестр TASKS
 │       ├── task1_shares.py     # доли сетевых/независимых
-│       └── task2_ratings.py    # (в работе) сравнение рейтингов и отзывов
+│       ├── task2_ratings.py    # сравнение рейтингов и отзывов
+│       ├── task3_dynamics.py   # динамика появлений и закрытий (Wayback)
+│       ├── task4_reviews.py    # анализ негативных отзывов
+│       └── task5_survival.py   # модель выживаемости (Cox)
 ├── scripts/
 │   ├── inspect_tables.py       # разовая инспекция схемы stg
 │   └── run_task.py             # CLI-точка входа
-└── outputs/                    # (gitignored) tables/, figures/
+└── outputs/                    # tables/, figures/ (закоммичены в git)
 ```
 
 ---
@@ -160,16 +162,17 @@ foodservice-analytics/
 
 | № | Задача | Статус | Файл |
 |---|---|---|---|
-| 1 | Доля сетевых и независимых по категориям и районам (снимок «сейчас»). **Фаза 2** — динамика с 2018 через `wayback_snapshots` | фаза 1 готова<br> фаза 2 запланирована | `task1_shares.py` |
-| 2 | Сравнение рейтингов и числа отзывов сетевых/независимых внутри категорий (boxplot + Mann-Whitney U) | в работе | `task2_ratings.py` |
-| 3 | Динамика открытий (с 2018) и закрытий (2023–2026) | заблокировано: нужен wayback-парсер | — |
-| 4 | Причины негативных оценок в отзывах (сетевые vs независимые) | запланировано | — |
-| 5 | Модель выживаемости (Cox/logit): категория, тип владения, район, конкуренты в 300 м | заблокировано: нужны даты открытия/закрытия из wayback | — |
+| 1 | Доля сетевых и независимых по категориям и районам | готова | `task1_shares.py` |
+| 2 | Сравнение рейтингов и числа отзывов сетевых/независимых внутри категорий (boxplot + Mann-Whitney U) | готова | `task2_ratings.py` |
+| 3 | Динамика появлений (по Wayback) и закрытий (2023–2026) | готова | `task3_dynamics.py` |
+| 4 | Причины негативных оценок в отзывах (сетевые vs независимые) | готова | `task4_reviews.py` |
+| 5 | Модель выживаемости (Cox): категория, тип владения, район, конкуренты в 300 м | готова | `task5_survival.py` |
 
-**task3 и task5:** в `branches` нет `opened_date` и надёжного
-`closed_date`. `created_at` везде `null`, `is_deleted` покрывает лишь ~5% реальных
-закрытий. Даты восстанавливаются **только** из `wayback_snapshots` (first-seen /
-last-seen по `firm_id`).
+**Ограничения данных:** в `branches` нет `opened_date` и надёжного
+`closed_date`. `created_at` везде `null`, `is_deleted` покрывает лишь часть реальных
+закрытий. Поэтому в task3 и task5 даты восстанавливаются из `wayback_snapshots`
+(first-seen / last-seen по `firm_id`), а для закрытий дополнительно используется
+`deleted_at` и `last_seen`.
 
 ---
 
@@ -231,6 +234,3 @@ python scripts/run_task.py --task 2 --config config/default.yaml
 Для каждой задачи:
 - `outputs/tables/taskN_<name>.csv` - таблица результата;
 - `outputs/figures/taskN_<name>.png` - график (dpi=120, Agg-backend, работает без GUI).
-
-Имена файлов фиксированы, чтобы их можно было автоматически подхватывать при сборке
-статьи и презентации.
