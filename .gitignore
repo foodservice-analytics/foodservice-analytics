@@ -2,4 +2,9 @@
 .venv/
 __pycache__/
 *.pyc
-outputs/
+
+outputs/*
+!outputs/tables/
+!outputs/figures/
+!outputs/tables/*.csv
+!outputs/figures/*.png

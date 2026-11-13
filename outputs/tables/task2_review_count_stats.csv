@@ -1,0 +1,11 @@
+category,type,metric,n,mean,median,q25,q75
+Быстрое питание,chain,review_count,1282,101.75429017160687,56.0,19.0,124.75
+Быстрое питание,independent,review_count,1153,43.7398091934085,15.0,5.0,41.0
+Кафе,chain,review_count,382,180.20942408376965,69.5,26.0,190.0
+Кафе,independent,review_count,1014,72.31854043392505,25.0,7.0,73.75
+Кофейни,chain,review_count,625,78.0224,41.0,17.0,79.0
+Кофейни,independent,review_count,500,40.814,18.0,5.0,58.0
+Пекарни,chain,review_count,1308,71.89984709480122,47.0,19.0,98.0
+Пекарни,independent,review_count,452,15.086283185840708,5.0,2.0,16.0
+Рестораны,chain,review_count,677,568.5775480059084,266.0,109.0,697.0
+Рестораны,independent,review_count,1023,161.80938416422288,66.0,22.0,172.5

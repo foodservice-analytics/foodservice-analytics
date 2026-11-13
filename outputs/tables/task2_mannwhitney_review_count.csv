@@ -1,0 +1,6 @@
+category,metric,n_chain,n_independent,u_stat,p_value,significant_at_0.05
+Быстрое питание,review_count,1282,1153,1056455.0,5.116792106160264e-75,True
+Кафе,review_count,382,1014,264338.5,6.661327426147714e-26,True
+Кофейни,review_count,625,500,201420.5,7.238532652190838e-17,True
+Пекарни,review_count,1308,452,495571.5,2.771429054706521e-102,True
+Рестораны,review_count,677,1023,526874.0,3.1874448746891053e-74,True
