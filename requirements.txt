@@ -1,7 +1,5 @@
-ytsaurus-client>=0.13
-pandas>=2.0
-matplotlib>=3.7
-pyyaml>=6.0
-python-dotenv>=1.0
-scipy>=1.11
-lifelines>=0.27
+ytsaurus-client==0.13.55
+pandas==2.3.3
+PyYAML==6.0.3
+python-dotenv==1.2.4
+requests==2.34.2

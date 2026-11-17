@@ -1,0 +1,70 @@
+data_source:
+  type: chyt
+  yt:
+    proxy: "env:YT_PROXY"
+    proxy_default: "yt-api.xsserver.ru"
+    token_env: "YT_TOKEN"
+
+  chyt:
+    alias: "*ch_public"
+    timeout_seconds: 180
+    max_threads: 1
+    max_memory_bytes: 500000000
+    max_result_rows: 50000
+
+tables:
+  establishments:
+    path: "//home/spb_food/stg/branches"
+    # Маппинг реальное_имя -> стандартное_имя. Изменять, если схема поменяется.
+    columns:
+      id: id
+      name: name
+      org_id: org_id
+      org_branch_count: org_branch_count
+      rubrics: rubrics
+      district: district
+      city: city
+      lat: lat
+      lon: lon
+      rating: rating
+      review_count: review_count
+      is_deleted: is_deleted
+      deleted_at: deleted_at
+
+  reviews:
+    path: "//home/spb_food/stg/reviews"
+    columns:
+      branch_id: branch_id
+      review_id: review_id
+      date_created: date_created
+      rating: rating
+      text: text
+      provider: provider
+      is_hidden: is_hidden
+
+  wayback:
+    path: "//home/spb_food/stg/wayback_snapshots"
+    columns:
+      firm_id: firm_id
+      timestamp: timestamp
+      closed_text: closed_text
+      format: format
+
+  osm:
+    path: "//home/spb_food/stg/osm"
+
+analysis:
+  city: "Санкт-Петербург"
+  date_to: "2026-10-31"        # административная верхняя граница; не дата сбора
+  chain_min_branches: 2        # org_branch_count >= 2 -> сетевой
+  categories:
+    - "Рестораны"
+    - "Кафе"
+    - "Кофейни"
+    - "Быстрое питание"
+    - "Пекарни"
+  # Archive timestamps describe observations, never business openings.
+  # Strict city scope. Missing city and suburbs are excluded and reported in geography.
+
+output:
+  dir: "outputs"
